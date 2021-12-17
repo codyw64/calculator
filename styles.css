@@ -1,12 +1,16 @@
 body {
     font-size: 50px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 200px 0 0 0;
+    background: lightsalmon;
 }
 
-#calcButt {
-    width: 28%;
-    height: 40px;
-    margin: 1px;
+.calcButt {
+    width: 25%;
+    height: 80px;
     font-size: 25px;
 }
 
@@ -14,4 +18,37 @@ body {
     width: 400px;
     display: flex;
     flex-wrap: wrap;
+}
+
+.calcBody {
+    border-style: solid;
+    background-color: rgb(56, 56, 56);
+    height: 470px;
+    border-width: 5px;
+}
+
+.output {
+    background-color: lightgrey;
+    height: 50px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 5px;
+    align-items: center;
+}
+#number {
+    background-color: rgb(21, 182, 223);
+}
+#zero {
+    width: 50%;
+    background-color: rgb(21, 182, 223);
+
+}
+
+#topLine {
+    background-color: rgb(184, 11, 184);
+}
+
+#altLine {
+    background-color: rgb(94, 94, 247);
 }
