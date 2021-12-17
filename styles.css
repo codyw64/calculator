@@ -1,0 +1,17 @@
+body {
+    font-size: 50px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#calcButt {
+    width: 28%;
+    height: 40px;
+    margin: 1px;
+    font-size: 25px;
+}
+
+.buttonz {
+    width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+}
