@@ -11,8 +11,12 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (b === 0) {
+        output.textContent = "Cannot / by 0";
+        return 0;
+    } else {
     return a / b;
-}
+}}
 let a = 4;
 let b = 12;
 let answer = undefined;
@@ -46,10 +50,14 @@ const numbers = document.querySelectorAll("#number");
 
 numbers.forEach(number => {
     number.addEventListener('click', (e)=> {
-        if (output.textContent == 0) {
+        if (output.textContent == 0 && e.target.textContent == ".") {
+            output.textContent = "0";
+        } else if (output.textContent == "0.") {
+            
+        } else if (output.textContent == 0) {
             output.textContent = "";
         }
-        if (output.textContent.length > 10) {
+        if (output.textContent.length > 10 || (output.textContent.includes(".") && e.target.textContent == ".")) {
             return;
         }
         if (selectedOperator == undefined) {
@@ -66,7 +74,7 @@ numbers.forEach(number => {
 
 const zeros = document.querySelector('#zero');
 zeros.addEventListener('click', (e)=> {
-    if (output.textContent == 0 || output.textContent.length > 10) {
+    if (output.textContent.length > 10) {
         return;
     }
     if (selectedOperator == undefined) {
@@ -110,6 +118,7 @@ clearer.addEventListener('click', (e)=> {
     operators.forEach(operator => {
         operator.style.backgroundColor = "rgb(184, 11, 184)";
     });
+    answer = undefined;
 });
 
 const plusMinus = document.querySelector('#plusMinus');
