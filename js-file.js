@@ -13,20 +13,32 @@ function multiply(a, b) {
 function divide(a, b) {
     return a / b;
 }
-
+let a = 4;
 let b = 12;
+let answer = undefined;
 function operate(a, b) {
-    a = parseInt(a);
-    b = parseInt(b);
-    if (selectedOperator == "add") {
-        output.textContent = add(a, b);
-    } else if (selectedOperator == "subtract") {
-        output.textContent = subtract(a, b);
-    } else if (selectedOperator == "multiply") {
-        output.textContent = multiply(a, b);
-    } else if (selectedOperator == "divide") {
-        output.textContent = divide(a, b);
+    if (answer !== undefined) {
+        a = answer;
     }
+    a = parseFloat(a);
+    b = parseFloat(b);
+    if (selectedOperator == "add") {
+        answer = add(a, b);
+    } else if (selectedOperator == "subtract") {
+        answer = subtract(a, b);
+    } else if (selectedOperator == "multiply") {
+        answer = multiply(a, b);
+    } else if (selectedOperator == "divide") {
+        answer = divide(a, b);
+    }
+    if (answer.toString().length >= 13) {
+        answer = answer.toString().slice(0, 13);
+    }
+    output.textContent = answer;
+
+    operators.forEach(operator => {
+        operator.style.backgroundColor = "rgb(184, 11, 184)";
+    });
 }
 
 const output = document.querySelector(".output");
@@ -40,8 +52,14 @@ numbers.forEach(number => {
         if (output.textContent.length > 10) {
             return;
         }
-        output.textContent += e.target.textContent;
-        a = output.textContent;
+        if (selectedOperator == undefined) {
+            output.textContent += e.target.textContent;
+            a = output.textContent;
+        } else {
+            output.textContent += e.target.textContent;
+            b = output.textContent;
+        }
+        
     });
     
 });
@@ -51,8 +69,13 @@ zeros.addEventListener('click', (e)=> {
     if (output.textContent == 0 || output.textContent.length > 10) {
         return;
     }
-    output.textContent += e.target.textContent;
-    a = output.textContent;
+    if (selectedOperator == undefined) {
+        output.textContent += e.target.textContent;
+        a = output.textContent;
+    } else {
+        output.textContent += e.target.textContent;
+        b = output.textContent;
+    }
 });
 
 
@@ -60,22 +83,52 @@ let selectedOperator;
 const operators = document.querySelectorAll("#ops");
 operators.forEach(operator => {
     operator.addEventListener('click', (e) => {
-        operator.style.backgroundColor = "rgb(243, 12, 243)";
-        selectedOperator = operator.value;
+        if (operator.style.backgroundColor == "rgb(184, 11, 184)") {
+            operator.style.backgroundColor = "rgb(183, 11, 184)";
+        }
+        operators.forEach(operator => {
+            if (operator.style.backgroundColor == "rgb(243, 12, 243)") {
+                operator.style.backgroundColor = "rgb(184, 11, 184)";
+            }
+        });
+        if (operator.style.backgroundColor == "rgb(183, 11, 184)"){
+            operator.style.backgroundColor = "rgb(243, 12, 243)";
+            selectedOperator = operator.value;
+            output.textContent = "";
+        } else {
+            operator.style.backgroundColor = "rgb(184, 11, 184)";
+            selectedOperator = undefined;
+
+        }
     })
 });
 
 const clearer = document.querySelector('#clear');
 clearer.addEventListener('click', (e)=> {
     output.textContent = 0;
+    selectedOperator = undefined;
+    operators.forEach(operator => {
+        operator.style.backgroundColor = "rgb(184, 11, 184)";
+    });
 });
 
 const plusMinus = document.querySelector('#plusMinus');
-plusMinus.addEventListener('click', (e)=> {
-    if (output.textContent.includes("-")) {
-        let temp = output.textContent;
-        output.textContent = temp.replace("-", "");
-        return;
+plusMinus.addEventListener('click', (e)=> { 
+    if (selectedOperator == undefined) {
+        if (output.textContent.includes("-")) {
+            let temp = output.textContent;
+            output.textContent = temp.replace("-", "");
+            return;
+        }
+        output.textContent = "-" + output.textContent;
+        a = output.textContent;
+    } else {
+        if (output.textContent.includes("-")) {
+            let temp = output.textContent;
+            output.textContent = temp.replace("-", "");
+            return;
+        }
+        output.textContent = "-" + output.textContent;
+        b = output.textContent;
     }
-    output.textContent = "-" + output.textContent;
 });
